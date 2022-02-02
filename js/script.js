@@ -1,92 +1,108 @@
 'use strict';
+function Student(name, surname, yearOfBirth) {
+    const studentData = {
 
-const studentData = {
+        name: name,
+        surname: surname,
+        yearOfBirth: yearOfBirth,
 
-    name: 'Max',
-    surname: 'Black',
-    yearOfBirth: 1990,
+        get age() {
+            return 2022 - this.yearOfBirth
+        },
+        set age(userAge) {
+            return this.yearOfBirth = 2022 - userAge
+        },
 
-    get age() {
-        return 2022 - this.yearOfBirth
-    },
-    set age(userAge) {
-        return this.yearOfBirth = 2022 - userAge
-    },
+        attendance: new Array(10),
+        rating: new Array(10),
 
-    attendance: new Array(10),
-    rating: new Array(10),
+        findEmptyElement(arr) {
+            let emptyElementIndex = arr.findIndex((item) => item === undefined);
+            return emptyElementIndex
+        },
 
-    findEmptyElement(arr) {
-        let emptyElementIndex = arr.findIndex((item) => item === undefined);
-        return emptyElementIndex
-    },
+        present() {
+            let emptyElementIndex = this.findEmptyElement(this.attendance);
+            this.attendance[emptyElementIndex] = true
+        },
 
-    present() {
-        let emptyElementIndex = this.findEmptyElement(this.attendance);
-        this.attendance[emptyElementIndex] = true
-    },
+        absent() {
+            let emptyElementIndex = this.findEmptyElement(this.attendance);
+            this.attendance[emptyElementIndex] = false
+        },
 
-    absent() {
-        let emptyElementIndex = this.findEmptyElement(this.attendance);
-        this.attendance[emptyElementIndex] = false
-    },
+        mark(ratingValue) {
+            let emptyElementIndex = this.findEmptyElement(this.rating);
+            this.rating[emptyElementIndex] = ratingValue
+        },
 
-    mark(ratingValue) {
-        let emptyElementIndex = this.findEmptyElement(this.rating);
-        this.rating[emptyElementIndex] = ratingValue
-    },
+        getAverageRating() {
+            let numOfElementsRating = 0;
 
-    summary() {
-        let numOfElementsRating = 0;
-        let numOfElementsAttendance = 0;
+            let sumRating = this.rating.reduce((prevValue, item) => {
+                ++numOfElementsRating;
+                return item + prevValue
+            }, 0);
+            let averageRating = sumRating / numOfElementsRating;
+            return averageRating
 
+        },
 
-        let sumRating = this.rating.reduce((prevValue, item) => {
-            ++numOfElementsRating;
-            return item + prevValue
-        }, 0);
+        getAverageAttendance() {
+            let numOfElementsAttendance = 0;
+            let sumAttendance = this.attendance.reduce((prevValue, item) => {
+                ++numOfElementsAttendance;
+                return +item + prevValue
+            }, 0);
+            let averageAttendance = sumAttendance / numOfElementsAttendance;
+            return averageAttendance
+        },
 
-        let sumAttendance = this.attendance.reduce((prevValue, item) => {
-            ++numOfElementsAttendance;
-            return +item + prevValue
-        }, 0);
+        summary() {
 
-        let averageRating = sumRating / numOfElementsRating;
-        let averageAttendance = sumAttendance / numOfElementsAttendance;
+            let averageRating = this.getAverageRating()
+            let averageAttendance = this.getAverageAttendance();
 
-        if (averageRating >= 9 && averageAttendance >= 0.9) {
-            return 'Ути какой молодчинка!'
-        };
+            if (averageRating >= 9 && averageAttendance >= 0.9) {
+                return 'Ути какой молодчинка!'
+            };
 
-        if ((averageRating < 9 && averageAttendance >= 0.9) || (averageRating >= 9 && averageAttendance < 0.9)) {
-            return 'Норм, но можно лучше'
-        };
+            if ((averageRating < 9 && averageAttendance >= 0.9) || (averageRating >= 9 && averageAttendance < 0.9)) {
+                return 'Норм, но можно лучше'
+            };
 
-        if (averageRating < 9 && averageAttendance < 0.9) {
-            return 'Редиска!'
-        };
+            if (averageRating < 9 && averageAttendance < 0.9) {
+                return 'Редиска!'
+            };
 
-    },
+        },
 
+    };
+    return studentData
 };
 
-studentData.mark(10);
-studentData.mark(8);
-studentData.mark(10);
-studentData.mark(10);
+let student1 = new Student('Max', 'Black', 1990);
+let student2 = new Student('Eva', 'White', 1995);
+console.log(student1);
+console.log(student2);
 
 
-studentData.present();
-studentData.present();
-studentData.absent();
-studentData.present();
+student1.mark(10);
+student1.mark(8);
+student1.mark(10);
+student1.mark(10);
 
+student1.present();
+student1.present();
+student1.absent();
+student1.present();
 
+student1.age = 25;
+console.log(student1.age);
+console.log(student1.getAverageRating());
+console.log(student1.summary());
 
-
-console.log(studentData.summary());
-studentData.age = 25;
-console.log(studentData);
+console.log(student1);
 
 
 
