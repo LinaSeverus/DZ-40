@@ -1,4 +1,7 @@
 'use strict';
+
+// Неправильно (методы должны лежать в прототипе), смотри script2 !
+
 function Student(name, surname, yearOfBirth) {
     const studentData = {
 
@@ -78,8 +81,11 @@ function Student(name, surname, yearOfBirth) {
         },
 
     };
+
+
     return studentData
 };
+
 
 let student1 = new Student('Max', 'Black', 1990);
 let student2 = new Student('Eva', 'White', 1995);
